@@ -7,6 +7,7 @@ import userMiddleware from "../middleware/user.middleware.js";
 
 const router = express.Router();
 
+
 const isAuthenticated = userMiddleware;
 const isAdmin = adminMiddleware;
 
