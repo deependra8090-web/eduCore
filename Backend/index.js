@@ -23,11 +23,21 @@ app.use(
   })
 );
 app.use(cors({
-  origin:process.env.FRONTEND_URL,
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      process.env.FRONTEND_URL?.replace(/\/$/, ''), // Remove trailing slash
+      "https://edu-core-sandy.vercel.app",
+    ].filter(Boolean);
+    
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials:true ,
   methods:["GET","POST","PUT","DELETE"],  
   allowedHeaders:["Content-Type","Authorization"],
-
 }));
 
 
